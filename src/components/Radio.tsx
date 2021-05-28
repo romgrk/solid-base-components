@@ -78,8 +78,8 @@ export function Group(props: GroupProps): Component<GroupProps> {
 
   return (
     <div class={cxx('RadioGroup')}>
-      <For each={props.options}>
-        {o =>
+      <For each={props.options}
+        children={o =>
           <Radio
             name={name}
             checked={props.value !== undefined ? props.value === o.value : undefined}
@@ -90,7 +90,7 @@ export function Group(props: GroupProps): Component<GroupProps> {
             {o.label}
           </Radio>
         }
-      </For>
+      />
     </div>
 
   )

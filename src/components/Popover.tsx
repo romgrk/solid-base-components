@@ -4,7 +4,7 @@
 
 
 import { Component, createSignal, onCleanup } from 'solid-js'
-import { Portal } from 'solid-js/web'
+import { Show, Portal } from 'solid-js/web'
 import { createPopper } from '@popperjs/core'
 import cxx from '../cxx'
 
@@ -88,18 +88,23 @@ export default function Popover(props: Props): Component<Props> {
   return (
     <>
       {props.trigger({ ref, open, close, toggle })}
-      <Show when={mount.node()}>
-        <Portal mount={mount.node()}>
-          <div class={popoverClass()}>
-            {props.arrow &&
-              <div class={arrowClass()} ref={arrowNode} />
+      <Show when={mount.node()}
+        children={
+          <Portal mount={mount.node()}
+            children={
+              <div class={popoverClass()}>
+                {props.arrow &&
+                  <div class={arrowClass()} ref={arrowNode} />
+                }
+                <div class='Popover__content'>
+                  {props.children}
+                </div>
+              </div>
             }
-            <div class='Popover__content'>
-              {props.children}
-            </div>
-          </div>
-        </Portal>
-      </Show>
+          />
+
+        }
+      />
     </>
   )
 }

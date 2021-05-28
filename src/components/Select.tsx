@@ -4,6 +4,7 @@
 
 
 import { Component, splitProps } from 'solid-js'
+import { For } from 'solid-js/web'
 import type { Option } from '../types'
 import cxx from '../cxx'
 
@@ -47,11 +48,11 @@ export default function Select(allProps: Props): Component<Props> {
       onChange={onChange}
     >
       <option value='null'></option>
-      <For each={props.options}>
-        {o =>
+      <For each={props.options}
+        children={o =>
           <option value={JSON.stringify(o.value)}>{o.label}</option>
         }
-      </For>
+      />
     </select>
   )
 }

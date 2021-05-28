@@ -19,25 +19,25 @@ export default function Table(props: Props): Component<Props> {
     <table class={cxx('Table', props.class)}>
       <thead>
         <tr>
-          <For each={columns()}>
-            {column =>
+          <For each={columns()}
+            children={(column: any) =>
               <th>{column.name || column.key}</th>
             }
-          </For>
+          />
         </tr>
       </thead>
       <tbody>
-        <For each={props.items}>
-          {item =>
+        <For each={props.items}
+          children={item =>
             <tr>
-              <For each={columns()}>
-                {column =>
+              <For each={columns()}
+                children={column =>
                   <td>{renderItem(item, column)}</td>
                 }
-              </For>
+              />
             </tr>
           }
-        </For>
+        />
       </tbody>
     </table>
   )
