@@ -24,39 +24,40 @@ import { Box, Input, InputFile, Select, Popover, Checkbox, Radio } from 'solid-b
 // Minimally required layout styles
 import 'solid-base-components/dist/build.css'
 
-const App = () => <>
-  <Box>
-    <Input
-      onChange={text => console.log(text)}
-    />
-    <InputFile>Add File</InputFile>
-    <Select
-      options={options}
-      value={1}
-      onChange={console.log}
-    />
-    <Popover
-      arrow
-      closeOnClick
-      trigger={({ ref, open }) =>
-        <Button ref={ref} onClick={toggle}}>
-          Click Me
-        </Button>
-      }
-    >
-      <div>Content</div>
-    </Popover>
-    <Checkbox onChange={isChecked => console.log(isChecked)}>
-      Check Me
-    </Checkbox>
-    <Radio.Group
-      name='number'
-      options={options}
-      value={1}
-      onChange={console.log}
-    />
+const App = () =>
+  <Box vertical>
+    <Input onChange={text => console.log(text)} />
+    <InputFile onChange={files => console.log(files)}>Add File</InputFile>
+    <Box horizontal>
+      <Select
+        options={options}
+        value={1}
+        onChange={console.log}
+      />
+      <Popover
+        arrow
+        closeOnClick
+        trigger={({ ref, open }) =>
+          <Button ref={ref} onClick={toggle}}>
+            Click Me
+          </Button>
+        }
+      >
+        <div>Content</div>
+      </Popover>
+    </Box>
+    <Box horizontal>
+      <Checkbox onChange={isChecked => console.log(isChecked)}>
+        Check Me
+      </Checkbox>
+      <Radio.Group
+        name='number'
+        options={options}
+        value={1}
+        onChange={console.log}
+      />
+    </Box>
   </Box>
-</>
 
 render(() => App, document.getElementById('app'))
 ```
@@ -106,7 +107,9 @@ Icons use octicons for now. You can use them directly or on input/buttons:
 Elements try to follow these conventions:
  - Have an `onChange(value: any, ev: Event)` handler, where the first argument
     is the new value.
- - If `props.value` didn't change, keep the value in sync with the dom, to bring
+ - If `props.value` didn't change, keep the value in sync with the DOM, to bring
      the behavior closer to React.
  - Have a `loading: boolean` property that sets the element to `disabled` and
      displays a spinning loading icon.
+ - Choice picking components (`Select` and `Radio.Group` for now) take an
+     `options: Option[]` property, where `Option` is `{ value: string|number|null, label: JSX.Element }`.
