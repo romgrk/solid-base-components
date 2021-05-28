@@ -21,6 +21,8 @@ npm install solid-base-components
 ```javascript
 import { render } from 'solid-js/dom'
 import { Box, Input, InputFile, Select, Popover, Checkbox, Radio } from 'solid-base-components';
+// Minimally required layout styles
+import 'solid-base-components/dist/build.css'
 
 const App = () => <>
   <Box>
