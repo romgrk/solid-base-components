@@ -79,8 +79,7 @@ For example, to add button styles:
   border: 2px solid black;
 }
 .Button--small {
-  color: white;
-  background-color: blue;
+  height: 20px;
 }
 .Button--primary {
   color: white;
