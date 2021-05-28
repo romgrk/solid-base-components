@@ -34,11 +34,11 @@
     "build:component": "rollup -c",
     "build": "npm run build:babel && npm run build:types && npm run build:scss",
     "watch": "nf start babel,scss,types",
-    "build:scss":       "npx scss-bundle -e src/index.scss -o dist/build.css",
-    "build:scss:watch": "npx scss-bundle -e src/index.scss -o dist/build.css --watch",
-    "build:babel":       "NODE_ENV=production npx babel --extensions '.ts,.tsx' ./src/ --out-dir ./dist/esm --source-maps",
+    "build:scss":		    "npx sass src/index.scss dist/build.scss",
+    "build:scss:watch": "npx sass --watch src/index.scss dist/build.scss",
+    "build:babel": "NODE_ENV=production npx babel --extensions '.ts,.tsx' ./src/ --out-dir ./dist/esm --source-maps",
     "build:babel:watch": "NODE_ENV=production npx babel --extensions '.ts,.tsx' ./src/ --out-dir ./dist/esm --source-maps --watch",
-    "build:types":       "tsc --jsx preserve src/index.ts --sourceMap --outDir dist/types --declaration --emitDeclarationOnly",
+    "build:types": "tsc --jsx preserve src/index.ts --sourceMap --outDir dist/types --declaration --emitDeclarationOnly",
     "build:types:watch": "tsc --jsx preserve src/index.ts --sourceMap --outDir dist/types --declaration --emitDeclarationOnly --watch",
     "prepublishOnly": "npm run build"
   },
@@ -50,8 +50,11 @@
     "plugins": []
   },
   "dependencies": {
+    "@popperjs/core": "^2.9.2",
     "@primer/octicons": "^14.2.1",
+    "clsx": "^1.1.1",
     "object-assign": "^4.1.1",
+    "rambda": "^6.7.0",
     "sass": "^1.34.0",
     "solid-js": "0.26.5"
   },
@@ -60,6 +63,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
     "@babel/preset-typescript": "^7.13.0",
     "@types/dedent": "^0.7.0",
     "@types/degit": "^2.8.2",

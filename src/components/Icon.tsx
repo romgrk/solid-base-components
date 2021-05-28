@@ -6,13 +6,13 @@ import { Component, splitProps } from "solid-js";
 import octicons from '@primer/octicons'
 
 interface Props {
-  width: number;
   name: string;
-  info: boolean;
-  success: boolean;
-  warning: boolean;
-  danger: boolean;
-  spin: boolean;
+  width?: number;
+  info?: boolean;
+  success?: boolean;
+  warning?: boolean;
+  danger?: boolean;
+  spin?: boolean;
 }
 
 const colors = {

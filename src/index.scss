@@ -1,2 +1,15 @@
-@import '../node_modules/@primer/octicons/build/build.css';
+/* @import '../node_modules/@primer/octicons/build/build.css'; */
+.octicon {
+  display: inline-block;
+  vertical-align: text-top;
+  fill: currentColor;
+  overflow: visible;
+}
+
+/* Components */
+@import './components/Box.scss';
+@import './components/Button.scss';
 @import './components/Icon.scss';
+@import './components/InputFile.scss';
+@import './components/Input.scss';
+@import './components/Popover.scss';

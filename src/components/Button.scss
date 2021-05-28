@@ -1,0 +1,26 @@
+
+.Button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  /* styling styles */
+  color: black;
+  background-color: #eee;
+  border: 1px solid black;
+  border-radius: 2px;
+  margin: 0;
+  padding: 2px 0.25em;
+  font-size: 14px;
+  &:focus,
+  &:focus-within,
+  &:hover {
+    outline: none;
+    background-color: #ccc;
+  }
+  &:active {
+    outline: none;
+    background-color: #aaa;
+  }
+}

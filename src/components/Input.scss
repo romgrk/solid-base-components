@@ -1,0 +1,26 @@
+.Input {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #888;
+  background-color: white;
+}
+
+.Input:focus-within {
+  border: 1px solid #000;
+}
+
+.Input input {
+  flex: 1;
+  &, &:focus {
+    border: none;
+    outline: none;
+    background-color: transparent;
+  }
+}
+
+.Input--disabled {
+  color: #888;
+  background-color: #fdfdfd;
+}
