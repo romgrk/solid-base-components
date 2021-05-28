@@ -1,13 +1,13 @@
 # solid-base-components
 
 This is a collection of barely styled components on which you can build your own
-design system. It tries to use more consistent patterns such as always provinding
-the changed value to `onChange(value: any, ev: Event)` handlers of input elements.
+design system. It tries to use more consistent patterns for all input elements
+to make development easier.
 
 Commonly used non-native elements are also implemented, such as popovers with arrow,
 and more to come.
 
-![Demo](./demo.png)
+![Demo](./static/demo.png)
 
 
 ## Installation
@@ -85,3 +85,27 @@ For example, to add button styles:
   background-color: blue;
 }
 ```
+
+## Icons
+
+Icons use octicons for now. You can use them directly or on input/buttons:
+
+```javascript
+<Icon name='gear' />
+<Input icon='search' iconAfter='sync' />
+<Button icon='search' iconAfter='sync'>Click Me</Button>
+```
+
+![Icons](./static/icons.png)
+
+`<Icon />` also takes props `info`, `success`, `warning` or `danger` for colors.
+
+## Conventions
+
+Elements try to follow these conventions:
+ - Have an `onChange(value: any, ev: Event)` handler, where the first argument
+    is the new value.
+ - If `props.value` didn't change, keep the value in sync with the dom, to bring
+     the behavior closer to React.
+ - Have a `loading: boolean` property that sets the element to `disabled` and
+     displays a spinning loading icon.
