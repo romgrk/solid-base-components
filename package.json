@@ -1,6 +1,6 @@
 {
   "name": "solid-base-components",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Components for solid",
   "sideEffects": false,
   "type": "module",
@@ -34,7 +34,7 @@
     "build:component": "rollup -c",
     "build": "npm run build:babel && npm run build:types && npm run build:scss",
     "watch": "nf start babel,scss,types",
-    "build:scss":		    "npx sass src/index.scss dist/build.scss",
+    "build:scss": "npx sass src/index.scss dist/build.scss",
     "build:scss:watch": "npx sass --watch src/index.scss dist/build.scss",
     "build:babel": "NODE_ENV=production npx babel --extensions '.ts,.tsx' ./src/ --out-dir ./dist/esm --source-maps",
     "build:babel:watch": "NODE_ENV=production npx babel --extensions '.ts,.tsx' ./src/ --out-dir ./dist/esm --source-maps --watch",
