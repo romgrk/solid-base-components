@@ -18,7 +18,7 @@ npm install solid-base-components
 
 ## Usage
 
-```tsx
+```javascript
 import { render } from 'solid-js/dom'
 import { Box, Input, InputFile, Select, Popover, Checkbox, Radio } from 'solid-base-components';
 
@@ -42,9 +42,7 @@ const App = () => <>
         </Button>
       }
     >
-      <div>
-        Content
-      </div>
+      <div>Content</div>
     </Popover>
     <Checkbox onChange={isChecked => console.log(isChecked)}>
       Check Me
@@ -59,4 +57,31 @@ const App = () => <>
 </>
 
 render(() => App, document.getElementById('app'))
+```
+
+## Styling
+
+You are expected to provide your own styles for components. They follow
+a strict [BEM](http://getbem.com/) convention.
+
+For example, to add button styles:
+
+```javascript
+<Button size='small' variant='primary'>
+  Click Me
+</Button>
+```
+
+```css
+.Button {
+  border: 2px solid black;
+}
+.Button--small {
+  color: white;
+  background-color: blue;
+}
+.Button--primary {
+  color: white;
+  background-color: blue;
+}
 ```
