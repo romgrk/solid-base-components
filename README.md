@@ -7,7 +7,7 @@ the changed value to `onChange(value: any, ev: Event)` handlers of input element
 Commonly used non-native elements are also implemented, such as popovers with arrow,
 and more to come.
 
-![./demo.png](Demo)
+![Demo](./demo.png)
 
 
 ## Installation
