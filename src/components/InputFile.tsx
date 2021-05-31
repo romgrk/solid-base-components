@@ -9,8 +9,9 @@ import Button from './Button'
 interface Props {
   class?: string;
   children?: any;
-  multiple?: boolean;
   accept?: string;
+  capture?: string;
+  multiple?: boolean;
   onChange: (files: File[], ev: Event) => void;
 }
 
@@ -21,8 +22,9 @@ export default function InputFile(allProps: Props): Component<Props> {
     'onChange',
   ])
   const [inputProps, buttonProps] = splitProps(rest, [
-    'multiple',
     'accept',
+    'capture',
+    'multiple',
   ])
 
   const onChange = ev => {
