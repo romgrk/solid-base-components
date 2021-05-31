@@ -13,6 +13,7 @@ let nextName = 1
 interface Props extends JSX.IntrinsicAttributes {
   id?: string;
   name?: string;
+  class?: string;
   value?: any;
   checked?: boolean;
   disabled?: boolean;
@@ -28,6 +29,7 @@ interface Props extends JSX.IntrinsicAttributes {
 export default function Radio(allProps: Props): Component<Props> {
   const [props, rest] = splitProps(allProps, [
     'id',
+    'class',
     'children',
     'disabled',
   ])
@@ -37,7 +39,7 @@ export default function Radio(allProps: Props): Component<Props> {
   return (
     <span class={cxx('Radio', {
       disabled: disabled(),
-    })}>
+    }, props.class)}>
       <input
         {...rest}
         type='radio'
@@ -54,6 +56,7 @@ export default function Radio(allProps: Props): Component<Props> {
 interface GroupProps extends JSX.IntrinsicAttributes {
   value?: any;
   name?: string;
+  class?: string;
   options: Option[];
   onChange?: (value: any, ev: Event, o: Option) => void;
 }
@@ -77,7 +80,7 @@ export function Group(props: GroupProps): Component<GroupProps> {
   }
 
   return (
-    <div class={cxx('RadioGroup')}>
+    <div class={cxx('RadioGroup', props.class)}>
       <For each={props.options}
         children={o =>
           <Radio
