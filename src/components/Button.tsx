@@ -6,7 +6,7 @@ import { Component, splitProps, JSX } from "solid-js";
 import cxx from '../cxx'
 import Icon from './Icon'
 
-interface Props extends JSX.CustomAttributes<HTMLElement> {
+interface Props extends JSX.CustomAttributes<HTMLElement>, JSX.DOMAttributes<HTMLElement> {
   class?: string;
   icon?: string;
   iconAfter?: string;

@@ -3,7 +3,7 @@
  */
 
 
-import { Component, createSignal, onCleanup } from 'solid-js'
+import { Component, on, createEffect, createSignal, onCleanup } from 'solid-js'
 import { Show, Portal } from 'solid-js/web'
 import { createPopper } from '@popperjs/core'
 import cxx from '../cxx'
@@ -38,11 +38,7 @@ interface Props {
 }
 
 /**
- * @param {boolean} props.arrow
- * @param {Function} props.trigger
- * @param {boolean} [props.closeOnClick=true]
- * @param {string} [props.placement='bottom-start']
- * @param {Node} props.children
+ * Popover: a primitive to create popover elements such as tooltips or dropdown menus
  */
 export default function Popover(props: Props): Component<Props> {
   let triggerNode: HTMLElement
@@ -85,6 +81,11 @@ export default function Popover(props: Props): Component<Props> {
   const popoverClass = () => cxx('Popover', { open: isOpen() })
   const arrowClass = () => cxx('Popover__arrow', [getInversePlacement(placement())])
 
+  const [triggerWidth, setTriggerWidth] = createSignal(100)
+  createEffect(on(isOpen, () => {
+    setTriggerWidth(triggerNode.getBoundingClientRect().width)
+  }))
+
   return (
     <>
       {props.trigger({ ref, open, close, toggle })}
@@ -92,7 +93,7 @@ export default function Popover(props: Props): Component<Props> {
         children={
           <Portal mount={mount.node()}
             children={
-              <div class={popoverClass()}>
+              <div class={popoverClass()} style={{ '--trigger-width': `${triggerWidth()}px` }}>
                 {props.arrow &&
                   <div class={arrowClass()} ref={arrowNode} />
                 }
