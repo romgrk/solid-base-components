@@ -23,7 +23,7 @@ interface Props {
   disabled?: boolean,
   placeholder?: JSX.Element,
   children?: any,
-  onChange?: (value: boolean, ev: Event) => void,
+  onChange?: (value: boolean, ev: Event, o: Option) => void,
 }
 
 export default function Dropdown(props: Props): Component<Props> {
@@ -88,7 +88,7 @@ export default function Dropdown(props: Props): Component<Props> {
   )
 }
 
-function createControlledValue(props, close) {
+function createControlledValue(props: Props, close: () => void): [() => any, () => Option, (o, ev) => void] {
   const isControlled = props.value !== undefined
 
   let value = () => props.value
