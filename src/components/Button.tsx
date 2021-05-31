@@ -2,7 +2,7 @@
  * Button.tsx
  */
 
-import { Component, splitProps, JSX } from "solid-js";
+import { Component, splitProps, JSX } from 'solid-js';
 import cxx from '../cxx'
 import Icon from './Icon'
 
@@ -14,6 +14,7 @@ interface Props extends JSX.CustomAttributes<HTMLElement>, JSX.DOMAttributes<HTM
   variant?: string;
   size?: string;
   role?: string;
+  disabled?: boolean;
   children?: any;
 }
 declare type PropsKey = keyof Props
@@ -25,28 +26,29 @@ const buttonProps: PropsKey[] = [
   'loading',
   'variant',
   'size',
+  'disabled',
   'children',
 ]
 
 /**
- * @param {string} props.icon
- * @param {string} props.iconAfter
- * @param {boolean} props.loading
- * @param {string} props.variant
+ * Button: a normal button
  */
 export default function Button(allProps: Props): Component<Props> {
   const [props, rest] = splitProps(allProps, buttonProps)
   return (
-    <button class={buttonClass(props)} {...rest}>
+    <button class={buttonClass(props)} disabled={props.disabled} {...rest}>
       {buttonContent(props)}
     </button>
   )
 }
 
+/**
+ * Button.Label: a label styled as a button
+ */
 export function Label(allProps: Props): Component<Props> {
   const [props, rest] = splitProps(allProps, buttonProps)
   return (
-    <label class={buttonClass(props)} {...rest}>
+    <label class={buttonClass(props)} disabled={props.disabled} {...rest}>
       {buttonContent(props)}
     </label>
   )
@@ -60,6 +62,7 @@ export function buttonClass(props) {
   const variant = props.variant ?? 'primary'
   const size = props.size ?? 'medium'
   return cxx('Button', [variant, size], {
+    loading: props.loading,
     disabled: props.disabled,
   }, props.class)
 }

@@ -13,14 +13,19 @@
   margin: 0;
   padding: 2px 0.25em;
   font-size: 14px;
-  &:focus,
-  &:focus-within,
-  &:hover {
-    outline: none;
-    background-color: #ccc;
+  &:not(.Button--disabled) {
+    &:focus,
+    &:focus-within,
+    &:hover {
+      outline: none;
+      background-color: #ccc;
+    }
+    &:active {
+      outline: none;
+      background-color: #aaa;
+    }
   }
-  &:active {
-    outline: none;
-    background-color: #aaa;
-  }
+}
+.Button--disabled {
+  color: #666666;
 }

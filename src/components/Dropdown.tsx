@@ -28,6 +28,7 @@ interface Props {
 
 export default function Dropdown(props: Props): Component<Props> {
   // TODO: keyboard interface: https://stackoverflow.com/questions/41141247/aria-role-menuitem-for-a-or-li
+  // TODO: pass popover-props to popover
 
   let popover
   let close = () => popover.close()

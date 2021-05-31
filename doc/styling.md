@@ -5,6 +5,20 @@ This document should help you understand how to add your own design system on to
 of the various components by showing the HTML structure of each component and by
 explaining the different classes available
 
+## Button
+
+```html
+<button class='Button Button--medium Button--primary'>
+  <span class='Icon'>...</span> Click Me <span class='Icon'>...</span>
+</button>
+```
+
+Also receives:
+ - the class `Button--${props.size}` (default: `medium`)
+ - the class `Button--${props.variant}` (default: `primary`)
+ - the class `Button--loading` if `props.loading`
+ - the class `Button--disabled` if `props.disabled`
+
 ## Popover
 
 ```html
