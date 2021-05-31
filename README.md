@@ -107,12 +107,13 @@ Icons use octicons for now. You can use them directly or on input/buttons:
 
 ## Conventions
 
-Elements try to follow these conventions:
- - Have an `onChange(value: any, ev: Event)` handler, where the first argument
-    is the new value.
+User-input elements try to follow these conventions:
  - If `props.value` didn't change, keep the value in sync with the DOM, to bring
      the behavior closer to React.
  - Have a `loading: boolean` property that sets the element to `disabled` and
      displays a spinning loading icon.
- - Choice picking components (`Select` and `Radio.Group` for now) take an
+ - Choice picking components (`Select`, `Radio.Group`, `Dropdown`) take an
      `options: Option[]` property, where `Option` is `{ value: string|number|null, label: JSX.Element }`.
+ - Have an `onChange(value: any, ev: Event)` handler, where the first argument
+    is the new value. If it's a choice-picking component, the `Option` is passed as
+    a third argument.
