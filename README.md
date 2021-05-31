@@ -76,6 +76,7 @@ For example, to add button styles:
 ```
 
 ```css
+/* This would be your own CSS */
 .Button {
   border: 2px solid black;
 }
@@ -87,6 +88,8 @@ For example, to add button styles:
   background-color: blue;
 }
 ```
+
+See [the styling documentation](./doc/styling.md) for more details.
 
 ## Icons
 

@@ -31,6 +31,7 @@ type TriggerFunc = (o: {
 
 interface Props {
   trigger: TriggerFunc;
+  class?: string;
   closeOnClick?: boolean;
   arrow?: boolean;
   placement?: Placement;
@@ -78,7 +79,7 @@ export default function Popover(props: Props): Component<Props> {
       close()
   }
 
-  const popoverClass = () => cxx('Popover', { open: isOpen() })
+  const popoverClass = () => cxx('Popover', { open: isOpen() }, props.class)
   const arrowClass = () => cxx('Popover__arrow', [getInversePlacement(placement())])
 
   const [triggerWidth, setTriggerWidth] = createSignal(100)
