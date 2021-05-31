@@ -45,7 +45,7 @@ export default function Radio(allProps: Props): Component<Props> {
         disabled={disabled()}
       />
       <label for={id}>
-        {props.children} {rest.checked ? 'checked' : ''}
+        {props.children}
       </label>
     </span>
   )
