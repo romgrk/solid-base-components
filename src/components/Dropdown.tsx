@@ -2,7 +2,7 @@
  * Dropdown.tsx
  */
 
-import { Component, createSignal, JSX } from 'solid-js'
+import { Component, createEffect, createSignal, JSX } from 'solid-js'
 import { For } from 'solid-js/web'
 import type { Option } from '../types'
 import cxx from '../cxx'
@@ -23,20 +23,67 @@ interface Props {
   disabled?: boolean,
   placeholder?: JSX.Element,
   children?: any,
-  onChange?: (value: boolean, ev: Event, o: Option) => void,
+  onChange?: (value: boolean, ev: Event|undefined, o: Option) => void,
 }
 
 export default function Dropdown(props: Props): Component<Props> {
-  // TODO: keyboard interface: https://stackoverflow.com/questions/41141247/aria-role-menuitem-for-a-or-li
   // TODO: pass popover-props to popover
 
   let popover
+  let popoverNode: HTMLElement
   let close = () => popover.close()
 
   const id = props.id || `dropdown-${nextId++}`
   const disabled = () => props.disabled || props.loading
   const placeholder = () => props.placeholder ?? '-'
   const [value, option, onChange] = createControlledValue(props, close)
+  const [selected, setSelected] = createSignal(-1)
+
+  const onKeyDown = (ev) => {
+    switch (ev.key) {
+      case 'Escape': {
+        popover.close()
+        break
+      }
+      case 'Enter': {
+        const o = props.options[selected()]
+        if (o)
+          onChange(o, undefined)
+        popover.close()
+        break
+      }
+      case 'ArrowDown': {
+        let index = selected() + 1
+        if (index >= props.options.length)
+          index = -1
+        setSelected(index)
+        break
+      }
+      case 'ArrowUp': {
+        let index = selected() - 1
+        if (index <= -2)
+          index = props.options.length - 1
+        setSelected(index)
+        break
+      }
+      default: return
+    }
+    ev.preventDefault()
+  }
+
+  let previousActiveElement: HTMLElement
+  const onOpen = () => {
+    previousActiveElement = document.activeElement as HTMLElement
+    popoverNode.focus()
+    const v = value()
+    setSelected(props.options.findIndex(o => o.value === v) ?? -1)
+  }
+  const onClose = () => {
+    if (previousActiveElement) {
+      previousActiveElement.focus()
+      previousActiveElement = null
+    }
+  }
 
   const triggerLabel = () => option()?.label ?? value() ?? placeholder()
   const triggerClass = () =>
@@ -58,25 +105,31 @@ export default function Dropdown(props: Props): Component<Props> {
   const popoverClass = () =>
     cxx('Dropdown__popover', props.class)
 
-  const itemClass = (o) =>
-    cxx('Dropdown__item', { active: value() === o.value })
+  const itemClass = (o, index) =>
+    cxx('Dropdown__item', { active: value() === o.value, selected: selected() === index }, 'sel-' + selected())
 
   return (
-    <Popover trigger={trigger}>
+    <Popover
+      trigger={trigger}
+      onOpen={onOpen}
+      onClose={onClose}
+    >
       <ul
         id={id}
-        class={popoverClass()}
+        ref={popoverNode}
         tabindex='-1'
         role='listbox'
+        class={popoverClass()}
         aria-activedescendant={value() !== undefined ? `${id}--${value()}` : ''}
+        onKeyDown={onKeyDown}
       >
         <For each={props.options}
-          children={o =>
+          children={(o, index) =>
             <li
               id={`${id}--${o.value}`}
               role='option'
               aria-selected={value() === o.value ? 'true' : 'false'}
-              class={itemClass(o)}
+              class={itemClass(o, index())}
               onClick={[onChange, o]}
             >
               {o.label ?? o.value}
@@ -112,4 +165,3 @@ function createControlledValue(props: Props, close: () => void): [() => any, () 
 
   return [value, option, onChange]
 }
-

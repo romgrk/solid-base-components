@@ -36,6 +36,8 @@ interface Props {
   arrow?: boolean;
   placement?: Placement;
   children?: any;
+  onOpen?: () => void,
+  onClose?: () => void,
 }
 
 /**
@@ -68,8 +70,15 @@ export default function Popover(props: Props): Component<Props> {
   })
 
   const ref = node => triggerNode = node
-  const open = () => (attach(), setOpen(true))
-  const close = () => setOpen(false)
+  const open = () => {
+    attach()
+    setOpen(true)
+    props.onOpen?.()
+  }
+  const close = () => {
+    setOpen(false)
+    props.onClose?.()
+  }
   const toggle = () => isOpen() ? close() : open()
 
   const onDocumentClick = ev => {

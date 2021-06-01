@@ -8,6 +8,7 @@
 .Dropdown__item {
   cursor: default;
 }
+.Dropdown__item--selected,
 .Dropdown__item:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
