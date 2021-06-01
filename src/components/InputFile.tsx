@@ -34,7 +34,6 @@ export default function InputFile(allProps: Props): Component<Props> {
   return (
     <Button.Label
       class={cxx('InputFile', props.class)}
-      role='button'
       {...buttonProps}
     >
       {props.children}

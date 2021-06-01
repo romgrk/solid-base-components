@@ -8,6 +8,7 @@ import Icon from './Icon'
 
 interface Props extends JSX.CustomAttributes<HTMLElement>, JSX.DOMAttributes<HTMLElement> {
   class?: string;
+  type?: 'button'|'reset'|'submit';
   icon?: string;
   iconAfter?: string;
   loading?: boolean;
@@ -21,6 +22,7 @@ declare type PropsKey = keyof Props
 
 const buttonProps: PropsKey[] = [
   'class',
+  'type',
   'icon',
   'iconAfter',
   'loading',
@@ -36,7 +38,7 @@ const buttonProps: PropsKey[] = [
 export default function Button(allProps: Props): Component<Props> {
   const [props, rest] = splitProps(allProps, buttonProps)
   return (
-    <button class={buttonClass(props)} disabled={props.disabled} {...rest}>
+    <button class={buttonClass(props)} disabled={props.disabled} type={props.type ?? 'button'} {...rest}>
       {buttonContent(props)}
     </button>
   )
@@ -48,7 +50,7 @@ export default function Button(allProps: Props): Component<Props> {
 export function Label(allProps: Props): Component<Props> {
   const [props, rest] = splitProps(allProps, buttonProps)
   return (
-    <label class={buttonClass(props)} disabled={props.disabled} {...rest}>
+    <label class={buttonClass(props)} disabled={props.disabled} role='button' {...rest}>
       {buttonContent(props)}
     </label>
   )
