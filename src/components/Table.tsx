@@ -2,14 +2,19 @@
  * Table.tsx
  */
 
-import { For, Component } from 'solid-js'
+import { For, Component, JSX } from 'solid-js'
 import cxx from '../cxx'
 import { path } from 'rambda'
+
+interface ColumnProps {
+  key: string|number;
+  label?: JSX.Element;
+}
 
 interface Props {
   class?: string;
   items: Object[];
-  columns?: Object[];
+  columns?: ColumnProps[];
 }
 
 export default function Table(props: Props): Component<Props> {
@@ -21,7 +26,7 @@ export default function Table(props: Props): Component<Props> {
         <tr>
           <For each={columns()}
             children={(column: any) =>
-              <th>{column.name || column.key}</th>
+              <th>{column.label || column.key}</th>
             }
           />
         </tr>
@@ -48,10 +53,10 @@ function getColumns(props) {
     return props.columns
   const item = props.items[0]
   if (!item)
-    return [{ name: '(empty)', key: null }]
+    return [{ label: '(empty)', key: null }]
   const keys = Object.keys(item)
   return keys.map(key => ({
-    name: key,
+    label: key,
     key: key,
   }))
 }
