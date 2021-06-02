@@ -9,6 +9,7 @@ import Popover from './components/Popover'
 import Radio from './components/Radio'
 import Select from './components/Select'
 import Table from './components/Table'
+import Tag from './components/Tag'
 
 export {
   Box,
@@ -22,4 +23,5 @@ export {
   Radio,
   Select,
   Table,
+  Tag,
 };
