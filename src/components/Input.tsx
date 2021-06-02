@@ -5,9 +5,11 @@
 
 import { Component, splitProps } from 'solid-js'
 import cxx from '../cxx'
+import eventHandler from '../event-handler'
 import Icon from './Icon'
 
 interface Props {
+  ref?: any;
   value?: string;
   class?: string;
   status?: string;
@@ -19,12 +21,11 @@ interface Props {
 }
 
 /**
- * @param {string} props.icon
- * @param {string} props.iconAfter
- * @param {boolean} props.loading
+ * Input: an input element
  */
 export default function Input(allProps: Props): Component<Props> {
   const [props, rest] = splitProps(allProps, [
+    'ref',
     'class',
     'status',
     'icon',
@@ -36,13 +37,13 @@ export default function Input(allProps: Props): Component<Props> {
   const disabled = () => props.loading || props.disabled
   const onChange = (ev: InputEvent) => {
     const target = ev.target as HTMLInputElement
-    props.onChange?.(target.value, ev)
+    eventHandler(props.onChange, target.value, ev)
     if (rest.value !== undefined && target.value !== rest.value)
       target.value = rest.value
   }
 
   return (
-    <span class={cxx('Input', [props.status], {
+    <span ref={props.ref} class={cxx('Input', [props.status], {
       disabled: disabled(),
     }, props.class)}>
       {props.icon && <Icon name={props.icon} />}

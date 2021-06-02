@@ -6,6 +6,7 @@
 import { For, Component, splitProps, ComponentProps, JSX } from 'solid-js'
 import type { Option } from '../types'
 import cxx from '../cxx'
+import eventHandler from '../event-handler'
 
 let nextId = 1
 let nextName = 1
@@ -67,7 +68,7 @@ export function Group(props: GroupProps): Component<GroupProps> {
 
   const onChange = (o: Option, ev) => {
     const previousValue = props.value
-    props.onChange?.(o.value, ev, o)
+    eventHandler(props.onChange, o.value, ev, o)
     const currentValue = props.value
     if (props.value !== undefined && previousValue === currentValue) {
       ev.target.checked = false

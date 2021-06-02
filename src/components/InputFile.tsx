@@ -4,6 +4,7 @@
 
 import { Component, splitProps } from 'solid-js'
 import cxx from '../cxx'
+import eventHandler from '../event-handler'
 import Button from './Button'
 
 interface Props {
@@ -28,7 +29,7 @@ export default function InputFile(allProps: Props): Component<Props> {
   ])
 
   const onChange = ev => {
-    props.onChange?.(ev.target.files, ev)
+    eventHandler(props.onChange, ev.target.files, ev)
   }
 
   return (

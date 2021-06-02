@@ -7,6 +7,7 @@ import { Component, splitProps } from 'solid-js'
 import { For } from 'solid-js/web'
 import type { Option } from '../types'
 import cxx from '../cxx'
+import eventHandler from '../event-handler'
 
 interface Props {
   class?: string;
@@ -33,7 +34,7 @@ export default function Select(allProps: Props): Component<Props> {
   const value = () => props.value !== undefined ? JSON.stringify(props.value) : undefined
   const disabled = () => props.loading || rest.disabled
   const onChange = ev => {
-    props.onChange?.(JSON.parse(ev.target.value), ev)
+    eventHandler(props.onChange, JSON.parse(ev.target.value), ev)
     if (props.value !== undefined && ev.target.value !== props.value)
       ev.target.value = JSON.stringify(props.value)
   }

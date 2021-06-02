@@ -5,6 +5,7 @@
 
 import { Component, splitProps } from 'solid-js'
 import cxx from '../cxx'
+import eventHandler from '../event-handler'
 
 let nextId = 1
 
@@ -36,7 +37,7 @@ export default function Checkbox(allProps: Props): Component<Props> {
   const id = props.id || `checkbox-${nextId++}`
   const disabled = () => props.disabled
   const onChange = ev => {
-    props.onChange?.(ev.target.checked, ev)
+    eventHandler(props.onChange, ev.target.checked, ev)
     if (props.value !== undefined && props.value !== ev.target.checked)
       ev.target.checked = props.value
   }

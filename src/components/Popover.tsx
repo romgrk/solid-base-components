@@ -6,6 +6,7 @@
 import { Component, on, createEffect, createSignal, onCleanup } from 'solid-js'
 import { Show, Portal } from 'solid-js/web'
 import { createPopper } from '@popperjs/core'
+import eventHandler from '../event-handler'
 import cxx from '../cxx'
 
 type Placement = 
@@ -73,11 +74,11 @@ export default function Popover(props: Props): Component<Props> {
   const open = () => {
     attach()
     setOpen(true)
-    props.onOpen?.()
+    eventHandler(props.onOpen)
   }
   const close = () => {
     setOpen(false)
-    props.onClose?.()
+    eventHandler(props.onClose)
   }
   const toggle = () => isOpen() ? close() : open()
 
