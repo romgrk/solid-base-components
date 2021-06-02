@@ -3,10 +3,12 @@
  */
 
 import { Component, createEffect, createSignal, JSX } from 'solid-js'
-import { For } from 'solid-js/web'
+import { For, Show } from 'solid-js/web'
 import type { Option } from '../types'
 import cxx from '../cxx'
+import eventHandler from '../event-handler'
 import Button from './Button'
+import Input from './Input'
 import Popover from './Popover'
 
 let nextId = 1
@@ -19,11 +21,15 @@ interface Props {
   defaultValue?: any,
   size?: string,
   variant?: string,
+  input?: boolean,
+  searching?: boolean,
   loading?: boolean,
   disabled?: boolean,
   placeholder?: JSX.Element,
+  emptyMessage?: JSX.Element,
   children?: any,
-  onChange?: (value: boolean, ev: Event|undefined, o: Option) => void,
+  onChange?: (value: string|number|null, ev: Event|undefined, o: Option) => void,
+  onSearch?: (query: string) => void,
 }
 
 export default function Dropdown(props: Props): Component<Props> {
@@ -31,7 +37,12 @@ export default function Dropdown(props: Props): Component<Props> {
 
   let popover
   let popoverNode: HTMLElement
-  let close = () => popover.close()
+  let inputNode: HTMLElement
+  let close = () => {
+    popover.close()
+    if (inputNode)
+      (inputNode.children[0] as HTMLInputElement).value = ''
+  }
 
   const id = props.id || `dropdown-${nextId++}`
   const disabled = () => props.disabled || props.loading
@@ -40,16 +51,18 @@ export default function Dropdown(props: Props): Component<Props> {
   const [selected, setSelected] = createSignal(-1)
 
   const onKeyDown = (ev) => {
+    if (!popover.isOpen())
+      popover.open()
     switch (ev.key) {
       case 'Escape': {
-        popover.close()
+        close()
         break
       }
       case 'Enter': {
         const o = props.options[selected()]
         if (o)
           onChange(o, undefined)
-        popover.close()
+        close()
         break
       }
       case 'ArrowDown': {
@@ -73,8 +86,10 @@ export default function Dropdown(props: Props): Component<Props> {
 
   let previousActiveElement: HTMLElement
   const onOpen = () => {
-    previousActiveElement = document.activeElement as HTMLElement
-    popoverNode.focus()
+    if (!props.input) {
+      previousActiveElement = document.activeElement as HTMLElement
+      popoverNode.focus()
+    }
     const v = value()
     setSelected(props.options.findIndex(o => o.value === v) ?? -1)
   }
@@ -90,15 +105,35 @@ export default function Dropdown(props: Props): Component<Props> {
     cxx('Dropdown', [props.size, props.variant], { disabled: disabled() }, props.class)
   const trigger = (popover_) => {
     popover = popover_
+    return props.input ? triggerInput() : triggerButton()
+  }
+  const triggerButton = () =>
+    <Button
+      ref={popover.ref}
+      class={triggerClass()}
+      iconAfter='chevron-down'
+      onClick={popover.open}
+    >
+      {triggerLabel()}
+    </Button>
+
+  const triggerInput = () => {
+    const onBlur = ev => {
+      if (ev.relatedTarget === popoverNode || popoverNode.contains(ev.relatedTarget))
+        return
+      close()
+    }
     return (
-      <Button
-        ref={popover.ref}
+      <Input
+        ref={n => (inputNode = n) && popover.ref(n)}
         class={triggerClass()}
-        iconAfter='chevron-down'
-        onClick={popover.open}
-      >
-        {triggerLabel()}
-      </Button>
+        iconAfter={props.searching ? 'hourglass' : 'chevron-down' }
+        onFocus={popover.open}
+        onBlur={onBlur}
+        onChange={props.onSearch}
+        onKeyDown={onKeyDown}
+        placeholder={triggerLabel()}
+      />
     )
   }
 
@@ -136,6 +171,13 @@ export default function Dropdown(props: Props): Component<Props> {
             </li>
           }
         />
+        <Show when={props.options.length === 0}
+          children={
+            <li class='Dropdown__empty'>
+              {props.emptyMessage ?? 'No options'}
+            </li>
+          }
+        />
       </ul>
     </Popover>
   )
@@ -155,7 +197,7 @@ function createControlledValue(props: Props, close: () => void): [() => any, () 
   const onChange = (o, ev) => {
     if (!isControlled)
       setValue(o.value)
-    props.onChange?.(o.value, ev, o)
+    eventHandler(props.onChange, o.value, ev, o)
     if (isControlled)
       setOption(findOption())
     else

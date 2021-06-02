@@ -28,6 +28,7 @@ type TriggerFunc = (o: {
   open: () => void,
   close: () => void,
   toggle: () => void,
+  isOpen: () => boolean,
 }) => void;
 
 interface Props {
@@ -56,7 +57,8 @@ export default function Popover(props: Props): Component<Props> {
   const popperOptions = () => getPopperOptions(placement(), arrowNode, isOpen, console.log)
 
   const attach = () => {
-    if (mount.node()) return
+    if (mount.node())
+      return
     mount.attach()
     popper.attach(triggerNode, mount.node(), popperOptions())
     if (closeOnClick())
@@ -74,6 +76,7 @@ export default function Popover(props: Props): Component<Props> {
   const open = () => {
     attach()
     setOpen(true)
+    // popper.instance.setOptions(popperOptions())
     eventHandler(props.onOpen)
   }
   const close = () => {
@@ -99,7 +102,7 @@ export default function Popover(props: Props): Component<Props> {
 
   return (
     <>
-      {props.trigger({ ref, open, close, toggle })}
+      {props.trigger({ ref, open, close, toggle, isOpen })}
       <Show when={mount.node()}
         children={
           <Portal mount={mount.node()}

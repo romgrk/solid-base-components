@@ -59,14 +59,14 @@ just above:
   <div class='Popover__arrow'></div>
   <div class='Popover__content'>
     <ul class='Dropdown__popover'>
+      <!-- for an item with selection -->
+      <li class='Dropdown__item Dropdown__item--selected'>One</li>
       <!-- for an active item -->
-      <li class='Dropdown__item Dropdown__item--active'>
-        One
-      </li>
+      <li class='Dropdown__item Dropdown__item--active'>Two</li>
       <!-- for an inactive item -->
-      <li class='Dropdown__item'>
-        Two
-      </li>
+      <li class='Dropdown__item'>Three</li>
+      <!-- when there are no items -->
+      <li class='Dropdown__empty'>No options</li>
     </ul>
   </div>
 </div>
