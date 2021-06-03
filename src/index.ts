@@ -1,3 +1,4 @@
+import Alert from './components/Alert'
 import Box from './components/Box'
 import Button from './components/Button'
 import Checkbox from './components/Checkbox'
@@ -12,6 +13,7 @@ import Table from './components/Table'
 import Tag from './components/Tag'
 
 export {
+  Alert,
   Box,
   Button,
   Checkbox,

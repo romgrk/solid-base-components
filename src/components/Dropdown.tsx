@@ -59,7 +59,10 @@ export default function Dropdown(props: Props): Component<Props> {
         break
       }
       case 'Enter': {
-        const o = props.options[selected()]
+        let index = selected()
+        if (index === -1 && props.input)
+          index = 0
+        const o = props.options[index]
         if (o)
           onChange(o, undefined)
         close()
