@@ -10,7 +10,7 @@ interface Props {
   class?: string;
   horizontal?: boolean;
   vertical?: boolean;
-  children: any;
+  children?: any;
 }
 
 /**

@@ -3,12 +3,14 @@
  */
 
 
-import { Component, splitProps } from 'solid-js'
+import { Component, JSX, splitProps } from 'solid-js'
 import cxx from '../cxx'
 import eventHandler from '../event-handler'
 import Icon from './Icon'
 
-interface Props {
+
+type InputProps = Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'onChange'>
+interface OwnProps {
   ref?: any;
   value?: string;
   class?: string;
@@ -17,8 +19,9 @@ interface Props {
   iconAfter?: string;
   loading?: boolean;
   disabled?: boolean;
-  onChange?: (value: string, ev: Object) => void;
+  onChange?: (value: string, ev?: Event) => void;
 }
+type Props = InputProps & OwnProps
 
 /**
  * Input: an input element

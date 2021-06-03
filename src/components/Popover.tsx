@@ -97,6 +97,10 @@ export default function Popover(props: Props): Component<Props> {
 
   const [triggerWidth, setTriggerWidth] = createSignal(100)
   createEffect(on(isOpen, () => {
+    if (!triggerNode) {
+      console.warn('[Popover]: trigger node not defined! Set it with `popoverAPI.ref(node)`')
+      return
+    }
     setTriggerWidth(triggerNode.getBoundingClientRect().width)
   }))
 

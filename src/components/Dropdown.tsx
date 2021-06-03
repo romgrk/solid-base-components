@@ -29,7 +29,7 @@ interface Props {
   emptyMessage?: JSX.Element,
   children?: any,
   onChange?: (value: string|number|null, ev: Event|undefined, o: Option) => void,
-  onSearch?: (query: string) => void,
+  onSearch?: (query: string, ev?: Event) => void,
 }
 
 export default function Dropdown(props: Props): Component<Props> {

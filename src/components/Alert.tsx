@@ -3,17 +3,18 @@
  */
 
 
-import { Component, splitProps } from 'solid-js'
+import { Component, JSX, splitProps } from 'solid-js'
 import cxx from '../cxx'
 import Box from './Box'
 import Icon from './Icon'
 
-interface Props {
+interface Props extends JSX.CustomAttributes<HTMLElement>, JSX.DOMAttributes<HTMLElement> {
   class?: string;
   icon?: string;
   variant?: string;
   color?: string;
-  children: any;
+  inline?: boolean;
+  children?: any;
 }
 
 /**
@@ -25,11 +26,12 @@ export default function Alert(allProps: Props): Component<Props> {
     'icon',
     'variant',
     'color',
+    'inline',
     'children',
   ])
 
   return (
-    <Box horizontal class={cxx('Alert', [props.variant, props.color], props.class)} {...rest}>
+    <Box horizontal class={cxx('Alert', [props.variant, props.color], { inline: props.inline }, props.class)} {...rest}>
       {props.icon &&
         <div class='Alert__icon'>
           <Icon name={props.icon} />
