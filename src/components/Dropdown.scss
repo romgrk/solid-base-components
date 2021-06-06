@@ -3,10 +3,11 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  width: var(--trigger-width);
+  min-width: var(--trigger-width);
 }
 .Dropdown__item {
   cursor: default;
+  white-space: nowrap;
 }
 .Dropdown__item--selected,
 .Dropdown__item:hover {
