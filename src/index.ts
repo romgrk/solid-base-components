@@ -10,6 +10,7 @@ import Input from './components/Input'
 import Popover from './components/Popover'
 import Radio from './components/Radio'
 import Select from './components/Select'
+import Tab from './components/Tab'
 import Table from './components/Table'
 import Tag from './components/Tag'
 
@@ -26,6 +27,7 @@ export {
   Popover,
   Radio,
   Select,
+  Tab,
   Table,
   Tag,
 };
