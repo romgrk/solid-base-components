@@ -12,7 +12,8 @@ interface Pane {
   render: () => JSX.Element;
 }
 
-interface Props extends JSX.CustomAttributes<HTMLElement>, JSX.DOMAttributes<HTMLElement> {
+type HTMLProps = Omit<JSX.DOMAttributes<HTMLElement>, 'onChange'>
+interface OwnProps extends JSX.CustomAttributes<HTMLElement> {
   class?: string;
   vertical?: boolean;
   active?: number;
@@ -20,6 +21,7 @@ interface Props extends JSX.CustomAttributes<HTMLElement>, JSX.DOMAttributes<HTM
   panes: Pane[];
   onChange?: (index: number) => void;
 }
+type Props = HTMLProps & OwnProps
 
 /**
  * Tab: a tag component
@@ -58,10 +60,11 @@ export default function Tab(allProps: Props): Component<Props> {
   )
 }
 
-interface ContentProps extends JSX.CustomAttributes<HTMLElement>, JSX.DOMAttributes<HTMLElement> {
+interface ContentOwnProps extends JSX.CustomAttributes<HTMLElement> {
   class?: string;
   children: JSX.Element;
 }
+type ContentProps = HTMLProps & ContentOwnProps
 
 function Content(allProps: ContentProps) {
   const [props, rest] = splitProps(allProps, [
@@ -75,13 +78,14 @@ function Content(allProps: ContentProps) {
   )
 }
 
-interface HeaderProps extends JSX.CustomAttributes<HTMLElement>, JSX.DOMAttributes<HTMLElement> {
+interface HeaderOwnProps extends JSX.CustomAttributes<HTMLElement> {
   class?: string;
   vertical?: boolean;
   panes: Pane[];
   active: number;
   onChange: (index: number) => void;
 }
+type HeaderProps = HTMLProps & HeaderOwnProps
 
 function Header(allProps: HeaderProps) {
   const [props, rest] = splitProps(allProps, [
