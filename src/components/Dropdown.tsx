@@ -2,7 +2,7 @@
  * Dropdown.tsx
  */
 
-import { Component, createEffect, createSignal, JSX } from 'solid-js'
+import { Component, splitProps, createSignal, JSX } from 'solid-js'
 import { For, Show } from 'solid-js/web'
 import type { Option } from '../types'
 import cxx from '../cxx'
@@ -13,7 +13,8 @@ import Popover from './Popover'
 
 let nextId = 1
 
-interface Props {
+type HTMLProps = Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'onChange'>
+interface OwnProps {
   options: Option[],
   id?: string,
   class?: string,
@@ -31,8 +32,30 @@ interface Props {
   onChange?: (value: string|number|null, ev: Event|undefined, o: Option) => void,
   onSearch?: (query: string, ev?: Event) => void,
 }
+type Props = HTMLProps & OwnProps
 
-export default function Dropdown(props: Props): Component<Props> {
+export default function Dropdown(allProps: Props): Component<Props> {
+  const [props, rest] = splitProps(allProps, [
+    'options',
+    'id',
+    'class',
+    'value',
+    'default',
+    'size',
+    'variant',
+    'input',
+    'searching',
+    'loading',
+    'disabled',
+    'placeholder',
+    'emptyMessage',
+    'children',
+    'onChange',
+    'onSearch',
+    'onBlur',
+    'onFocus',
+  ])
+
   // TODO: pass popover-props to popover
 
   let popover
@@ -116,6 +139,7 @@ export default function Dropdown(props: Props): Component<Props> {
       class={triggerClass()}
       iconAfter='chevron-down'
       onClick={popover.open}
+      {...rest}
     >
       {triggerLabel()}
     </Button>
@@ -125,17 +149,23 @@ export default function Dropdown(props: Props): Component<Props> {
       if (ev.relatedTarget === popoverNode || popoverNode.contains(ev.relatedTarget))
         return
       close()
+      props.onBlur?.()
+    }
+    const onFocus = () => {
+      popover.open()
+      props.onFocus?.()
     }
     return (
       <Input
         ref={n => (inputNode = n) && popover.ref(n)}
         class={triggerClass()}
         iconAfter={props.searching ? 'hourglass' : 'chevron-down' }
-        onFocus={popover.open}
+        onFocus={onFocus}
         onBlur={onBlur}
         onChange={props.onSearch}
         onKeyDown={onKeyDown}
         placeholder={triggerLabel()}
+        {...rest}
       />
     )
   }
