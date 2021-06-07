@@ -13,7 +13,7 @@ import Popover from './Popover'
 
 let nextId = 1
 
-type HTMLProps = Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'onChange'>
+type HTMLProps = Omit<JSX.DOMAttributes<HTMLInputElement>, 'onChange'>
 interface OwnProps {
   options: Option[],
   id?: string,
@@ -40,7 +40,7 @@ export default function Dropdown(allProps: Props): Component<Props> {
     'id',
     'class',
     'value',
-    'default',
+    'defaultValue',
     'size',
     'variant',
     'input',
@@ -149,11 +149,12 @@ export default function Dropdown(allProps: Props): Component<Props> {
       if (ev.relatedTarget === popoverNode || popoverNode.contains(ev.relatedTarget))
         return
       close()
-      props.onBlur?.()
+      eventHandler(props.onBlur)
     }
     const onFocus = () => {
       popover.open()
-      props.onFocus?.()
+      eventHandler(props.onFocus)
+      props.onSearch?.('')
     }
     return (
       <Input
