@@ -18,6 +18,8 @@ npm install solid-base-components
 
 ## Usage
 
+[See live demo here](https://codesandbox.io/s/solid-base-components-demo-1uk53?file=/index.tsx)
+
 ```javascript
 import { render } from 'solid-js/dom'
 import { Box, Input, InputFile, Select, Popover, Checkbox, Radio } from 'solid-base-components';
